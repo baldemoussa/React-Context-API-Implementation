@@ -1,46 +1,44 @@
-import { useContext } from 'react';
-import { FilterButtons } from './components/FilterButtons';
-import { ThemeToggleButton } from './components/ThemeToggleButton';
-import { TodoInput } from './components/TodoInput';
-import { TodoList } from './components/TodoList';
-import { ThemeContext } from './context/ThemeContext';
-import { TodoContext } from './context/TodoContext';
+import { useContext } from "react";
+import { FilterButtons } from "./components/FilterButtons";
+import { ThemeToggleButton } from "./components/ThemeToggleButton";
+import { TodoInput } from "./components/TodoInput";
+import { TodoList } from "./components/TodoList";
+import { ThemeContext } from "./context/ThemeContext";
 
 function App() {
   const { theme } = useContext(ThemeContext);
-  const { clearCompleted, todos } = useContext(TodoContext);
   const isDark = theme === "dark";
-  const hasCompleted = todos.some((todo) => todo.completed);
 
   return (
-    <div
-      className={`min-h-screen ${
-        isDark ? "bg-gray-900 text-white" : "bg-white text-gray-900"
-      }`}
-    >
-      <div className="mx-auto max-w-xl p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-bold">Context API Implementation</h1>
-          <ThemeToggleButton />
-        </div>
-        <TodoInput />
-        <div className="flex flex-wrap items-center gap-2">
-          <FilterButtons />
-          <button
-            type="button"
-            onClick={clearCompleted}
-            disabled={!hasCompleted}
-            className={`px-3 py-1 rounded ${
-              isDark ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-900"
-            } disabled:opacity-50`}
+    <div className={`min-h-screen ${isDark ? "bg-slate-900" : "bg-slate-50"}`}>
+      <div className="mx-auto max-w-xl px-6 py-10">
+        <header className="mb-6 flex items-start justify-between gap-4">
+          <h1
+            className={`text-4xl font-extrabold leading-tight tracking-tight ${
+              isDark ? "text-white" : "text-slate-800"
+            }`}
           >
-            Clear completed
-          </button>
+            Context API - Todo App
+          </h1>
+          <ThemeToggleButton />
+        </header>
+
+        <hr className={isDark ? "border-slate-700" : "border-slate-200"} />
+
+        <div className="mt-6">
+          <TodoInput />
         </div>
-        <TodoList />
+
+        <div className="mt-5 flex justify-center">
+          <FilterButtons />
+        </div>
+
+        <div className="mt-5">
+          <TodoList />
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
