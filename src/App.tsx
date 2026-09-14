@@ -18,7 +18,7 @@ function App() {
         isDark ? "bg-gray-900 text-white" : "bg-white text-gray-900"
       }`}
     >
-      <div className="mx-auto max-w-2xl p-6">
+      <div className="mx-auto max-w-xl p-6">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">Context API Implementation</h1>
           <ThemeToggleButton />
