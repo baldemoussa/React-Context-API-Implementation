@@ -1,78 +1,66 @@
-# React + TypeScript + Vite
+# Context API Todo App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A todo list that shares its data through React Context. Add items, mark them done, edit or delete them, and filter the list. The todos and the light or dark theme stay in the browser after a refresh.
 
-Currently, two official plugins are available:
+## Screenshots
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The list screenshots use sample todos. A fresh visit starts with an empty list.
 
-## React Compiler
+**Empty list.** The page asks for a todo and starts on the All filter.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+![Empty todo app with the message No todos yet](docs/screenshots/empty.png)
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+**All todos.** Completed items are crossed out. The footer counts how many are still left, and Clear Completed shows how many are done.
 
-## Expanding the ESLint configuration
+![Four todos, two of them completed, with 2 items left](docs/screenshots/todo-list.png)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Completed filter.** Only finished todos stay on screen. The item count still means how many are left to do.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+![Completed filter showing the two finished todos](docs/screenshots/completed-filter.png)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**Dark mode.** The moon button switches the page to dark and becomes a sun. That choice is saved.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+![The same todo list in dark mode](docs/screenshots/dark-mode.png)
 
+## What you can do
+
+- Add a todo from the text field. A blank entry is left off the list.
+- Mark a todo complete or active
+- Edit a todo. Enter saves, and Escape cancels. A blank edit is left unchanged.
+- Delete a todo
+- Filter by All, Active, or Completed. The filter starts on All each time the page loads.
+- Clear every completed todo
+- Switch between light and dark
+
+Todos are saved in the browser under the key `todos`. The theme is saved under `theme`.
+
+## Getting started
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Open the URL Vite prints, usually `http://localhost:5173/`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Command | What it does |
+| --- | --- |
+| `npm run build` | Type-check and build for production |
+| `npm run preview` | Serve the production build |
+| `npm run lint` | Run ESLint |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## How the context is split
 
-```
+Three providers wrap the app in `src/main.tsx`:
+
+- **Theme** keeps the page light or dark
+- **Todos** keeps the list and the add, toggle, edit, delete, and clear actions
+- **Filter** keeps All, Active, or Completed
+
+Each component reads the context it needs with `useContext`.
+
+## Built with
+
+- React 19 and TypeScript
+- Vite
+- Tailwind CSS
